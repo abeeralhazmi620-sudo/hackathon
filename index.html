@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>هاكاثون قيمنا حياة - مدرسة الحسيني</title>
+    <title>مختبر الابتكار - مدرسة الحسيني</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background: #f0fdfa; color: #1e293b; overflow-x: hidden; }
-        .glass-card { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        body { font-family: 'Tajawal', sans-serif; background: #f0fdfa; color: #1e293b; }
+        .glass-card { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
         .header-gradient { background: linear-gradient(135deg, #0d9488 0%, #065f46 100%); }
-        .prompt-box { background: #f8fafc; border: 2px dashed #0d9488; padding: 1.5rem; border-radius: 1.5rem; }
-        .loading-dots:after { content: '.'; animation: dots 1.5s steps(5, end) infinite; }
-        @keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60% { content: '...'; } 80%, 100% { content: ''; } }
-        .moe-logo { height: 80px; width: auto; }
-        .copy-toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 12px 24px; border-radius: 12px; display: none; z-index: 50; }
+        .step-card { transition: all 0.4s ease; border-radius: 2rem; }
+        .prompt-box { background: #f8fafc; border: 2px dashed #0d9488; padding: 1.25rem; border-radius: 1.5rem; }
+        .action-btn { transition: all 0.3s ease; }
+        .action-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="p-2 md:p-6 bg-slate-50 text-right">
+<body class="p-2 md:p-10">
 
-    <div class="max-w-xl mx-auto glass-card rounded-[3rem] overflow-hidden border border-white">
+    <div class="max-w-xl mx-auto glass-card rounded-[3rem] overflow-hidden">
         <!-- Header -->
-        <div class="header-gradient p-10 text-center text-white relative">
+        <div class="header-gradient p-8 text-center text-white">
             <div class="space-y-4">
-                <div class="bg-white p-4 rounded-3xl inline-block shadow-xl">
-                    <svg class="moe-logo" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <div class="bg-white p-3 rounded-2xl inline-block shadow-lg">
+                    <svg width="50" height="50" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                         <g fill="#4fb3a5">
                             <circle cx="120" cy="80" r="10"/><circle cx="150" cy="85" r="9"/><circle cx="180" cy="95" r="8"/>
                             <circle cx="120" cy="110" r="10"/><circle cx="150" cy="115" r="9"/><circle cx="180" cy="125" r="8"/>
@@ -34,172 +35,138 @@
                             <circle cx="280" cy="110" r="10"/><circle cx="250" cy="115" r="9"/><circle cx="220" cy="125" r="8"/>
                             <circle cx="280" cy="140" r="10"/><circle cx="250" cy="145" r="9"/><circle cx="220" cy="155" r="8"/>
                         </g>
-                        <text x="200" y="240" text-anchor="middle" font-weight="800" font-size="44" fill="#065f46">وزارة التعلـيـم</text>
                     </svg>
                 </div>
-                <h2 class="text-xl font-bold">مدرسة متوسطة وثانوية الحسيني</h2>
-                <div class="bg-yellow-400 text-teal-900 px-6 py-1 rounded-full text-xs font-black inline-block shadow-md">رمضان 1447هـ</div>
-                <h1 class="text-3xl md:text-4xl font-black mt-2 leading-tight">هاكاثون "قيمنا حياة"</h1>
+                <h2 class="text-lg font-bold">مدرسة متوسطة وثانوية الحسيني</h2>
+                <div class="bg-yellow-400 text-teal-900 px-4 py-1 rounded-full text-[10px] font-black inline-block shadow-sm">هاكاثون رمضان 1447هـ</div>
+                <h1 class="text-2xl font-black mt-2">مساعد الابتكار الرقمي 🚀</h1>
             </div>
         </div>
 
-        <div class="p-8 space-y-10">
-            <!-- AI Form Section -->
-            <div class="bg-rose-50/50 p-8 rounded-[2.5rem] border border-rose-100 shadow-sm">
-                <h3 class="text-rose-700 font-black text-2xl mb-4 flex items-center gap-2">
-                    <span>✨</span> مصمم المشاريع الذكي
-                </h3>
+        <div class="p-6 md:p-8 space-y-8">
+            
+            <!-- Step 1: Data Entry -->
+            <div id="step1" class="step-card bg-rose-50/50 p-6 border border-rose-100 space-y-4">
+                <p class="text-rose-700 text-sm font-bold text-center mb-2">الخطوة الأولى: جهزي فكرتكِ</p>
                 
-                <div class="space-y-5">
-                    <input id="stdName" type="text" placeholder="اسمكِ يا مبدعة..." class="w-full p-4 rounded-2xl border-2 border-rose-100 outline-none text-right shadow-inner focus:border-rose-400 transition-all">
-                    
-                    <select id="projType" class="w-full p-4 rounded-2xl border-2 border-rose-100 outline-none bg-white text-right cursor-pointer focus:border-rose-400 transition-all">
-                        <option value="">اختاري نوع المشروع...</option>
-                        <option value="chatbot">روبوت محادثة ذكي (Gemini)</option>
-                        <option value="story">قصة رقمية تفاعلية (Gemini)</option>
-                        <option value="canva">تطبيق أو لوحة تفاعلية (Canva)</option>
-                    </select>
+                <input id="stdName" type="text" placeholder="اكتبي اسمكِ هنا..." class="w-full p-4 rounded-xl border-2 border-rose-100 outline-none text-right shadow-sm focus:border-rose-400 transition-all">
+                
+                <select id="projType" class="w-full p-4 rounded-xl border-2 border-rose-100 outline-none bg-white text-right cursor-pointer">
+                    <option value="">نوع المشروع المفضل...</option>
+                    <option value="story">تصميم قصة رقمية (بمساعدة Gemini)</option>
+                    <option value="chatbot">بناء روبوت محادثة (بمساعدة Gemini)</option>
+                    <option value="canva">لوحة تفاعلية أو تطبيق (بمساعدة Canva)</option>
+                </select>
 
-                    <input id="valInterest" type="text" placeholder="القيمة الرمضانية (مثلاً: الصدق)" class="w-full p-4 rounded-2xl border-2 border-rose-100 outline-none text-right focus:border-rose-400 transition-all shadow-inner">
-                    
-                    <button onclick="generateMagicPrompt()" id="aiBtn" class="w-full bg-rose-500 hover:bg-rose-600 text-white p-5 rounded-2xl font-black shadow-lg transition-all active:scale-95 flex items-center justify-center gap-3 text-lg">
-                        🚀 تصميم الأمر السحري
-                    </button>
-                </div>
-
-                <div id="loadingArea" class="hidden mt-6 text-center">
-                    <p class="text-rose-500 font-bold animate-pulse">جاري الاتصال بـ Gemini لتصميم أمركِ السحري<span class="loading-dots"></span></p>
-                </div>
+                <input id="stdValue" type="text" placeholder="القيمة الرمضانية؟ (مثلاً: الصدق)" class="w-full p-4 rounded-xl border-2 border-rose-100 outline-none text-right shadow-sm focus:border-rose-400 transition-all">
+                
+                <button onclick="generatePromptJourney()" id="mainBtn" class="w-full bg-rose-500 hover:bg-rose-600 text-white p-5 rounded-xl font-black shadow-lg transition-all active:scale-95">
+                    🪄 ابدئي الرحلة التقنية
+                </button>
             </div>
 
-            <!-- Result Section -->
-            <div id="resultDisplay" class="hidden space-y-6">
-                <div class="prompt-box shadow-inner">
-                    <h4 class="text-teal-700 font-black text-sm mb-3">💡 انسخي هذا "الأمر" لتبدئي العمل في أداتكِ:</h4>
-                    <div id="magicPrompt" class="bg-white p-5 rounded-2xl text-sm font-bold text-slate-700 leading-relaxed border border-teal-100 shadow-sm select-all">
-                        <!-- Prompt will be here -->
+            <!-- Step 2: Prompt Results -->
+            <div id="resultArea" class="hidden space-y-6 animate-slide-up">
+                
+                <!-- Prompt Builder Section -->
+                <div class="prompt-box">
+                    <h4 class="text-teal-700 font-black text-xs mb-3 flex items-center gap-2">
+                        <span>📋</span> الخطوة الثانية: انسخي "الأمر السحري" الخاص بكِ:
+                    </h4>
+                    <div id="magicPrompt" class="text-slate-700 text-sm font-bold leading-relaxed bg-white p-4 rounded-xl border border-teal-100 shadow-inner select-all min-h-[80px]">
+                        <!-- Local Prompt Injection -->
                     </div>
-                    <button onclick="copyCommand()" class="mt-4 w-full bg-slate-800 text-white py-4 rounded-2xl font-black hover:bg-black transition-all shadow-md">
-                        نسخ الأمر السحري ✅
-                    </button>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                        <button onclick="copyPromptText()" class="bg-slate-800 text-white p-3 rounded-xl font-bold flex items-center justify-center gap-2 text-sm action-btn">
+                            نسخ الأمر ✅
+                        </button>
+                        <a href="https://generateprompt.ai/" target="_blank" class="bg-orange-500 text-white p-3 rounded-xl font-bold flex items-center justify-center gap-2 text-sm action-btn">
+                            مولّد أوامر متقدم 🌐
+                        </a>
+                    </div>
                 </div>
 
-                <div id="toolRedirect" class="bg-teal-600 text-white p-8 rounded-[2.5rem] text-center shadow-2xl">
-                    <p id="toolAdvice" class="text-sm mb-5 font-medium leading-relaxed opacity-95"></p>
-                    <a href="#" id="toolUrl" target="_blank" class="block w-full bg-white text-teal-800 py-5 rounded-2xl font-black shadow-xl hover:scale-105 transition-all text-lg">
+                <!-- Redirect Tools Section -->
+                <div id="toolRedirect" class="bg-teal-600 text-white p-6 rounded-[2rem] text-center shadow-xl space-y-4 border-4 border-teal-400">
+                    <h4 class="font-black text-lg">الخطوة الثالثة: التنفيذ 🛠️</h4>
+                    <p class="text-xs font-medium opacity-90 leading-relaxed" id="guidanceText"></p>
+                    <a href="#" id="toolUrl" target="_blank" class="block w-full bg-white text-teal-800 py-4 rounded-xl font-black text-lg action-btn">
                         افتحي الأداة وابدئي الآن 🚀
                     </a>
                 </div>
             </div>
 
-            <!-- Registration -->
-            <div class="bg-emerald-600 text-white p-8 rounded-[3rem] text-center shadow-2xl space-y-6">
-                <h3 class="text-2xl font-black">جاهزة للمشاركة؟</h3>
-                <div class="bg-white/10 border-2 border-dashed border-white/30 p-8 rounded-[2rem]">
-                    <p class="text-xl font-black leading-tight mb-2">التسجيل "عبر الخاص" 📱</p>
-                    <p class="text-xs opacity-90 leading-relaxed font-medium">
-                        بعد تصميم مشروعكِ المبدع، أرسلي رابط المشاركة أو الملف للمعلمة عبير لتسجيل مشاركتكِ في الهاكاثون.
+            <!-- Participation Submission -->
+            <div class="bg-emerald-600 text-white p-8 rounded-[2.5rem] text-center shadow-xl space-y-4">
+                <h3 class="text-lg font-black italic">كيف تنهين رحلتكِ؟</h3>
+                <div class="bg-white/10 border-2 border-dashed border-white/30 p-4 rounded-xl">
+                    <p class="text-xs leading-relaxed">
+                        بمجرد انتهائكِ من تصميم مشروعكِ (الرابط أو الملف)، قومي بإرساله للمعلمة **عبير الحازمي** عبر الخاص لتسجيل مشاركتكِ في الهاكاثون.
                     </p>
                 </div>
             </div>
         </div>
 
-        <footer class="bg-slate-100 p-8 text-center border-t border-slate-200">
-            <div class="grid grid-cols-3 gap-2 text-[10px] md:text-xs font-bold text-slate-500">
-                <div>المعلمة: عبير الحازمي</div><div>النشاط: عقيلة خزاعي</div><div>المديرة: مريم عجيبي</div>
-            </div>
+        <footer class="bg-slate-100 p-6 text-center text-[10px] font-bold text-slate-500 border-t">
+            مختبر الابتكار الرقمي بمدرسة الحسيني • 1447هـ
         </footer>
     </div>
 
-    <div id="toast" class="copy-toast">تم نسخ الأمر بنجاح! اذهبي للأداة والصقيه هناك ✅</div>
-
     <script>
-        const apiKey = "AIzaSyDlA0tbszBKAJ2KQIMi88NLlOzcVaB9dF8";
-
-        async function generateMagicPrompt() {
+        function generatePromptJourney() {
             const name = document.getElementById('stdName').value;
             const type = document.getElementById('projType').value;
-            const interest = document.getElementById('valInterest').value;
-            const btn = document.getElementById('aiBtn');
-            const resultDiv = document.getElementById('resultDisplay');
-            const loader = document.getElementById('loadingArea');
+            const value = document.getElementById('stdValue').value;
+            const resultArea = document.getElementById('resultArea');
 
-            if (!name || !type || !interest) {
-                alert("يا مبدعة، يرجى إكمال جميع البيانات أولاً! ❤️");
+            if (!name || !type || !value) {
+                alert("يا مبدعة، أكملي جميع البيانات أولاً! ❤️");
                 return;
             }
 
-            btn.disabled = true;
-            loader.classList.remove('hidden');
-            resultDiv.classList.add('hidden');
+            // توليد الأمر محلياً لضمان عدم حدوث خطأ
+            let typeAR = "";
+            let link = "";
+            let guide = "";
+            let toolName = "";
 
-            const prompt = `أنا الطالبة "${name}" من مدرسة الحسيني، أشارك في هاكاثون "قيمنا حياة" رمضان 1447هـ. موضوعي المفضل هو "${interest}" ونوع مشروعي "${type}". 
-            المطلوب: صغ لي "أمراً برمجياً" (Prompt) احترافياً واحداً طويلاً باللغة العربية لأضعه في Gemini ليساعدني في بناء مشروعي بشكل مذهل وتفاعلي. ابدأ بـ: "يا ذكاء اصطناعي، أنا ${name} من مدرسة الحسيني..." وتحدث عن تفاصيل المشروع وإبداع Canva و Gemini.`;
-
-            try {
-                // استخدام النسخة v1 المستقرة والنهائية لتجاوز خطأ v1beta
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error?.message || "فشل الاتصال بجوجل");
-                }
-
-                const data = await response.json();
-                const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                
-                if (text) {
-                    showResults(name, type, text);
-                } else {
-                    throw new Error("لم يتم استلام رد");
-                }
-
-            } catch (error) {
-                console.error(error);
-                alert("⚠️ خلل تقني: " + error.message + "\n\nيرجى التأكد من استقرار الإنترنت، أو أن مفتاح الـ API مفعّل.");
-            } finally {
-                btn.disabled = false;
-                loader.classList.add('hidden');
-            }
-        }
-
-        function showResults(name, type, magicPrompt) {
-            const resultDiv = document.getElementById('resultDisplay');
-            const magicBox = document.getElementById('magicPrompt');
-            const toolLink = document.getElementById('toolUrl');
-            const toolAdvice = document.getElementById('toolAdvice');
-
-            resultDiv.classList.remove('hidden');
-            magicBox.innerText = magicPrompt.replace(/\*\*/g, '');
-
-            if (type === 'canva') {
-                toolAdvice.innerText = `مذهل يا ${name}! انسخي الأمر أعلاه، ثم افتحي Canva وابدئي التصميم، وبمجرد انتهائكِ أرسلي لي "رابط المشاركة" النهائية.`;
-                toolLink.href = "https://www.canva.com";
+            if (type === 'story') {
+                typeAR = "كتابة قصة رقمية تفاعلية";
+                link = "https://gemini.google.com";
+                toolName = "Gemini";
+                guide = `يا ${name}، انسخي الأمر ثم افتحي Gemini، والصقيه هناك ليؤلف لكِ أجمل قصة عن ${value} بمدرسة الحسيني.`;
+            } else if (type === 'chatbot') {
+                typeAR = "تصميم روبوت محادثة ذكي";
+                link = "https://gemini.google.com";
+                toolName = "Gemini";
+                guide = `يا ${name}، انسخي الأمر ثم افتحي Gemini، واطلبي منه تصميم سيناريو الحوار لروبوتكِ الخاص عن ${value}.`;
             } else {
-                toolAdvice.innerText = `رائع يا ${name}! انسخي الأمر وافتحيه في Gemini، وبعد الحصول على النتيجة وتطبيق فكرتكِ، شاركيني "المشروع النهائي" لتسجيله.`;
-                toolLink.href = "https://gemini.google.com";
+                typeAR = "تصميم لوحة تفاعلية أو تطبيق";
+                link = "https://www.canva.com";
+                toolName = "Canva";
+                guide = `يا ${name}، انسخي الأمر كدليل لكِ، ثم افتحي Canva وابحثي عن 'Interactive Presentation' لتبدئي الإبداع.`;
             }
-            resultDiv.scrollIntoView({ behavior: 'smooth' });
+
+            const localPrompt = `يا ذكاء اصطناعي، أنا الطالبة المبدعة ${name} من مدرسة الحسيني، أشارك في هاكاثون "قيمنا حياة" 1447هـ. أريد منك مساعدتي في ${typeAR} عن قيمة (${value}). اقترح عليّ محتوىً إبداعياً، سيناريو مبهراً، وخطوات لتنفيذ المشروع باستخدام أدوات التقنية الحديثة.`;
+
+            document.getElementById('magicPrompt').innerText = localPrompt;
+            document.getElementById('guidanceText').innerText = guide;
+            document.getElementById('toolUrl').href = link;
+            document.getElementById('toolUrl').innerText = `افتحي ${toolName} الآن 🚀`;
+
+            resultArea.classList.remove('hidden');
+            resultArea.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function copyCommand() {
+        function copyPromptText() {
             const text = document.getElementById('magicPrompt').innerText;
-            const textarea = document.createElement("textarea");
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textarea);
-            
-            const toast = document.getElementById('toast');
-            toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert("تم النسخ بنجاح! ✅ الآن اضغطي على زر فتح الأداة بالأسفل.");
         }
     </script>
 </body>
