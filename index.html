@@ -14,18 +14,19 @@
         .prompt-box { background: #f8fafc; border: 2px dashed #0d9488; padding: 1.5rem; border-radius: 1.5rem; }
         .action-btn { transition: all 0.3s ease; }
         .action-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .tool-choice-card { transition: all 0.3s ease; border: 2px solid transparent; }
+        .tool-choice-card:hover { border-color: #0d9488; transform: translateY(-5px); background: #f0fdfa; }
         .animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="p-2 md:p-10">
+<body class="p-2 md:p-10 bg-teal-50/20">
 
     <div class="max-w-xl mx-auto glass-card rounded-[3rem] overflow-hidden border border-white">
         <!-- Header -->
         <div class="header-gradient p-8 text-center text-white">
             <div class="space-y-4">
                 <div class="bg-white p-3 rounded-2xl inline-block shadow-lg">
-                    <!-- شعار الوزارة SVG -->
                     <svg width="50" height="50" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                         <g fill="#4fb3a5">
                             <circle cx="120" cy="80" r="10"/><circle cx="150" cy="85" r="9"/><circle cx="180" cy="95" r="8"/>
@@ -43,7 +44,7 @@
                 <div class="bg-yellow-400 text-teal-900 px-4 py-1 rounded-full text-[10px] font-black inline-block shadow-sm">مسابقة هاكاثون قيمنا الرقمية 1447</div>
                 
                 <div class="space-y-1">
-                    <h1 class="text-3xl font-black mt-2 leading-tight">هاكاثون قيمنا الرقمية 🚀</h1>
+                    <h1 class="text-3xl font-black mt-2 leading-tight text-white">هاكاثون قيمنا الرقمية 🚀</h1>
                     <!-- أسماء الطاقم الإداري والتعليمي -->
                     <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[11px] font-bold opacity-90 pt-2 border-t border-white/20 mt-2">
                         <span>المعلمة: عبير الحازمي</span>
@@ -54,77 +55,90 @@
             </div>
         </div>
 
-        <div class="p-6 md:p-8 space-y-8">
+        <div class="p-6 md:p-8 space-y-10">
             
             <!-- Step 1: Input -->
             <div id="step1" class="step-card bg-rose-50/50 p-6 border border-rose-100 space-y-4 shadow-sm">
-                <p class="text-rose-700 text-sm font-bold text-center mb-2">أهلاً بكِ يا مبدعة.. لنجهّز "أمركِ السحري" ونبدأ التنفيذ!</p>
+                <p class="text-rose-700 text-sm font-bold text-center mb-2 font-bold">الخطوة الأولى: حددي فكرة مشاركتكِ</p>
                 
                 <input id="stdName" type="text" placeholder="اكتبي اسمكِ المبدع هنا..." class="w-full p-4 rounded-xl border-2 border-rose-100 outline-none text-right shadow-sm focus:border-rose-400 transition-all">
                 
-                <select id="projType" class="w-full p-4 rounded-xl border-2 border-rose-100 outline-none bg-white text-right cursor-pointer focus:border-rose-400">
+                <select id="projType" class="w-full p-4 rounded-xl border-2 border-rose-100 outline-none bg-white text-right cursor-pointer">
                     <option value="">اختاري نوع المشاركة...</option>
-                    <option value="story">كتابة قصة رقمية مصورة (كتاب)</option>
-                    <option value="chatbot">تصميم روبوت محادثة ذكي</option>
-                    <option value="canva">لوحة تفاعلية أو عرض مبهر</option>
+                    <option value="app">تصميم واجهة تطبيق مبتكر (App)</option>
+                    <option value="game">إنشاء لعبة تعليمية (Game)</option>
+                    <option value="chatbot">بناء روبوت محادثة ذكي (Chatbot)</option>
+                    <option value="website">تصميم موقع ويب صغير (Website)</option>
+                    <option value="board">لوحة تفاعلية تعليمية (Board)</option>
+                    <option value="story">تأليف قصة رقمية مصورة (Story)</option>
                 </select>
 
-                <input id="stdValue" type="text" placeholder="ما هي القيمة؟ (مثلاً: الصدق)" class="w-full p-4 rounded-xl border-2 border-rose-100 outline-none text-right shadow-sm focus:border-rose-400 transition-all">
+                <input id="stdValue" type="text" placeholder="ما هي القيمة؟ (مثلاً: الصدق، بر الوالدين)" class="w-full p-4 rounded-xl border-2 border-rose-100 outline-none text-right shadow-sm focus:border-rose-400">
                 
-                <button onclick="generatePrompt()" id="mainBtn" class="w-full bg-rose-500 hover:bg-rose-600 text-white p-5 rounded-xl font-black shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2">
+                <button onclick="processPrompt()" id="mainBtn" class="w-full bg-rose-500 hover:bg-rose-600 text-white p-5 rounded-xl font-black shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 text-lg">
                     🪄 إنشاء النص السحري
                 </button>
             </div>
 
-            <!-- Step 2: Result & External Link -->
-            <div id="resultArea" class="hidden space-y-6 animate-slide-up">
-                
-                <div class="prompt-box">
+            <!-- Step 2: Result -->
+            <div id="resultArea" class="hidden space-y-8 animate-slide-up">
+                <div class="prompt-box shadow-inner">
                     <h4 class="text-teal-700 font-black text-xs mb-3 flex items-center gap-2">
-                        <span>📝</span> الخطوة الثانية: انسخي "الأمر" أو استخدمي المولد المتقدم:
+                        <span>📝</span> الخطوة الثانية: انسخي "الأمر" ثم انطلقي للمنصة التي تفضلينها:
                     </h4>
-                    <div id="magicPrompt" class="text-slate-700 text-sm font-bold leading-relaxed bg-white p-4 rounded-xl border border-teal-100 shadow-inner select-all min-h-[100px]">
-                        <!-- سيظهر النص المولد هنا -->
-                    </div>
-                    
+                    <div id="magicPrompt" class="text-slate-700 text-sm font-bold leading-relaxed bg-white p-4 rounded-xl border border-teal-100 shadow-inner select-all min-h-[100px]"></div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                        <button onclick="copyToClip()" class="bg-slate-800 text-white p-3 rounded-xl font-bold flex items-center justify-center gap-2 text-sm action-btn">
-                            نسخ النص ✅
-                        </button>
-                        <a href="https://generateprompt.ai/" target="_blank" class="bg-orange-500 text-white p-3 rounded-xl font-bold flex items-center justify-center gap-2 text-sm action-btn">
-                            مولّد أوامر متقدم 🌐
-                        </a>
+                        <button onclick="copyToClip()" class="bg-slate-800 text-white p-3 rounded-xl font-bold flex items-center justify-center gap-2 text-sm action-btn shadow-md">نسخ النص ✅</button>
+                        <a href="https://generateprompt.ai/" target="_blank" class="bg-orange-500 text-white p-3 rounded-xl font-bold flex items-center justify-center gap-2 text-sm action-btn shadow-md">مولّد أوامر متقدم 🌐</a>
                     </div>
                 </div>
 
-                <!-- Step 3: Tool Link -->
-                <div id="toolBox" class="bg-teal-600 text-white p-6 rounded-[2rem] text-center shadow-xl space-y-4 border-4 border-teal-400">
-                    <h4 class="font-black text-lg underline">الخطوة الأخيرة: ابدئي التنفيذ 🛠️</h4>
-                    <p class="text-xs font-medium opacity-95 leading-relaxed" id="toolGuidance"></p>
-                    <a href="#" id="toolUrl" target="_blank" class="block w-full bg-white text-teal-800 py-4 rounded-xl font-black text-lg action-btn">
-                        افتحي الأداة الآن 🚀
-                    </a>
+                <!-- Tools Choice Section -->
+                <div class="space-y-4">
+                    <h4 class="text-center font-black text-teal-800 text-lg">أين تودين إكمال الإبداع؟ ✨</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Choice: Gemini -->
+                        <div class="tool-choice-card bg-white p-6 rounded-[2.5rem] shadow-sm text-center space-y-4 border-2">
+                            <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mx-auto text-3xl">🤖</div>
+                            <div>
+                                <h5 class="font-black text-slate-800 text-lg">عبر Gemini</h5>
+                                <p class="text-[10px] text-slate-500 mt-1 leading-relaxed">لصناعة العقل الذكي، كتابة نصوص القصص، أو حوارات الروبوت.</p>
+                            </div>
+                            <a href="https://gemini.google.com" target="_blank" class="block w-full bg-blue-600 text-white py-3 rounded-2xl font-black text-sm action-btn shadow-lg">انتقلي لـ Gemini 🚀</a>
+                        </div>
+                        
+                        <!-- Choice: Canva -->
+                        <div class="tool-choice-card bg-white p-6 rounded-[2.5rem] shadow-sm text-center space-y-4 border-2">
+                            <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mx-auto text-3xl">🎨</div>
+                            <div>
+                                <h5 class="font-black text-slate-800 text-lg">عبر Canva</h5>
+                                <p class="text-[10px] text-slate-500 mt-1 leading-relaxed">لتصميم الواجهات، الألعاب التفاعلية، والكتب المصورة المبهرة.</p>
+                            </div>
+                            <a href="https://www.canva.com" target="_blank" class="block w-full bg-purple-600 text-white py-3 rounded-2xl font-black text-sm action-btn shadow-lg">انتقلي لـ Canva 🚀</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Submission Box -->
+            <!-- Final Submission Box -->
             <div class="bg-emerald-600 text-white p-8 rounded-[2.5rem] text-center shadow-xl space-y-4">
-                <h3 class="text-lg font-black italic">كيف تسجلين مشاركتكِ؟</h3>
-                <div class="bg-white/10 border-2 border-dashed border-white/30 p-4 rounded-xl">
+                <h3 class="text-lg font-black italic">كيف تنهين رحلتكِ؟</h3>
+                <div class="bg-white/10 border-2 border-dashed border-white/30 p-5 rounded-2xl">
+                    <p class="text-sm font-black mb-1 underline">تنبيه هام:</p>
                     <p class="text-[11px] leading-relaxed font-bold">
-                        بمجرد انتهائكِ من تصميم مشروعكِ (سواء كانت قصة في كانفا أو حوار في جيمي)، قومي بإرساله للمعلمة **عبير الحازمي** عبر الخاص لتسجيل مشاركتكِ.
+                        أرسلي **"رابط المشاركة النهائية"** أو الملف الذي صممتيه للمعلمة عبير الحازمي عبر الخاص لتسجيل اسمكِ في الهاكاثون.
                     </p>
                 </div>
             </div>
         </div>
 
         <footer class="bg-slate-100 p-6 text-center text-[10px] font-bold text-slate-500 border-t">
-            هاكاثون قيمنا الرقمية بمدرسة الحسيني • 1447هـ
+            هاكاثون قيمنا الرقمية بمتوسطة وثانوية الحسيني • 1447هـ
         </footer>
     </div>
 
     <script>
-        function generatePrompt() {
+        function processPrompt() {
             const name = document.getElementById('stdName').value;
             const type = document.getElementById('projType').value;
             const value = document.getElementById('stdValue').value;
@@ -136,36 +150,22 @@
             }
 
             let promptText = "";
-            let link = "";
-            let guide = "";
-            let toolName = "";
 
-            if (type === 'story') {
-                promptText = `يا ذكاء اصطناعي، أنا الطالبة المبدعة ${name} من مدرسة الحسيني، أشارك في مسابقة هاكاثون قيمنا الرقمية. أريد منك تأليف "كتاب قصصي مصور" للأطفال عن قيمة (${value}). 
-المطلوب منك:
-1. كتابة قصة مشوقة مقسمة إلى 6 صفحات.
-2. لكل صفحة، اكتب النص (باللغة العربية) واصفاً المشهد ليساعدني في البحث عن صور مناسبة في Canva.
-3. اجعل القصة تنتهي بحكمة جميلة.`;
-                link = "https://gemini.google.com";
-                toolName = "Gemini";
-                guide = `يا ${name}، انسخي النص ثم افتحي Gemini واطلبي منه كتابة القصة. بعد ذلك توجهي لـ Canva وابحثي عن 'Storybook' لتصميم الكتاب بالصور.`;
+            if (type === 'app') {
+                promptText = `يا ذكاء اصطناعي، أنا الطالبة المبدعة ${name} من مدرسة الحسيني. أريد تصميم "تطبيق جوال مبتكر" يخدم قيمة (${value}). ساعدني في تخيل اسم للتطبيق، فكرته الأساسية، تقسيم الشاشات، والمميزات التي تجعله مفيداً للمستخدمين.`;
+            } else if (type === 'game') {
+                promptText = `يا ذكاء اصطناعي، أنا الطالبة المبدعة ${name}، أشارك في هاكاثون قيمنا الرقمية. أريد إنشاء "لعبة تعليمية تفاعلية" عن قيمة (${value}). ساعدني في بناء قصة اللعبة، مستوياتها، وكيفية ربط القيمة بالأهداف داخل اللعبة لتكون ممتعة وهادفة.`;
             } else if (type === 'chatbot') {
-                promptText = `يا ذكاء اصطناعي، ساعدني في تصميم "روبوت محادثة ذكي" ينشر أخلاق (${value}) بمناسبة هاكاثون قيمنا الرقمية 1447. اكتب لي رسائل الترحيب، واقترح عليّ 5 أسئلة ذكية يمكن للجمهور سؤالها للروبوت مع ردود متميزة. أنا الطالبة ${name}.`;
-                link = "https://gemini.google.com";
-                toolName = "Gemini";
-                guide = `يا ${name}، انسخي النص وافتحيه في Gemini لبناء حوارات الروبوت الخاص بكِ.`;
-            } else {
-                promptText = `يا ذكاء اصطناعي، أنا الطالبة ${name}. ساعدني في تصميم "عرض تفاعلي" عن قيمة (${value}). اقترح عليّ محتوى لـ 5 شرائح إبداعية، واقترح عليّ عناصر تفاعلية (Interactive Elements) يمكنني إضافتها في Canva لتشجيع الطالبات بمتوسطة وثانوية الحسيني.`;
-                link = "https://www.canva.com";
-                toolName = "Canva";
-                guide = `يا ${name}، انسخي النص ثم افتحي Canva وابحثي عن قوالب 'Interactive Presentation' وابدئي التصميم.`;
+                promptText = `يا ذكاء اصطناعي، أنا الطالبة ${name}. ساعدني في تصميم "روبوت محادثة ذكي" (Chatbot) ينشر أخلاق (${value}). اكتب لي رسائل الترحيب، واقترح عليّ 5 أسئلة ذكية يمكن للجمهور سؤالها للروبوت مع ردود متميزة تعبر عن مدرسة الحسيني.`;
+            } else if (type === 'website') {
+                promptText = `يا ذكاء اصطناعي، أنا الطالبة ${name}. أريد إنشاء "موقع ويب تعريفي صغير" عن قيمة (${value}). اقترح عليّ تقسيم صفحات الموقع، المحتوى المكتوب لكل صفحة، وتنسيقات جذابة تعبر عن هويتنا في مدرسة الحسيني.`;
+            } else if (type === 'board') {
+                promptText = `يا ذكاء اصطناعي، أنا الطالبة ${name}. أعمل على تصميم "لوحة تفاعلية تعليمية" عن قيمة (${value}). اقترح عليّ عناصر تفاعلية، أزرار، وأنشطة يمكنني إضافتها داخل اللوحة لتشجيع زميلاتي على التفاعل مع القيمة.`;
+            } else if (type === 'story') {
+                promptText = `يا ذكاء اصطناعي، أنا الطالبة المبدعة ${name} من مدرسة الحسيني. أريد تأليف "كتاب قصصي مصور" للأطفال عن قيمة (${value}). المطلوب: قصة مشوقة مقسمة إلى 6 صفحات، مع وصف للمشاهد ليساعدني في البحث عن صور في Canva.`;
             }
 
             document.getElementById('magicPrompt').innerText = promptText;
-            document.getElementById('toolGuidance').innerText = guide;
-            document.getElementById('toolUrl').href = link;
-            document.getElementById('toolUrl').innerText = `افتحي منصة ${toolName} الآن 🚀`;
-
             resultArea.classList.remove('hidden');
             resultArea.scrollIntoView({ behavior: 'smooth' });
         }
@@ -178,7 +178,7 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            alert("تم نسخ النص بنجاح! ✅ الآن اضغطي على الزر بالأسفل للانتقال للأداة.");
+            alert("تم نسخ النص بنجاح! ✅ الآن اختاري المنصة التي تفضلين البدء بها بالأسفل.");
         }
     </script>
 </body>
